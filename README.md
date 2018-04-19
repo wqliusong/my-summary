@@ -1,7 +1,7 @@
 # My Summary
 
 ## Summary of your usual knowledge, and learning outcomes.
-## Each recorded file uses the content profile and date to set the file name.
+## Each recorded file sets the folder name with the contents of the profile and date, with the attached demo.
 ### Classify the total catalog:
 1. JavaScript
 2. HTML

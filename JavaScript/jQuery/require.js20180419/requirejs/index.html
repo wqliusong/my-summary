@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 
+        引入require.js 
+        defer为ie的兼容 asycn为HTML5的兼容 为了解决本条script引起的页面加载延迟 与HTML内容进行异步加载
+        data-main为当前页面的JS主入口, 也可以在这编写require.config({}), 可以避免在很多页面的js中都要配置, 只在data-main中配置就可以了
+        所以在index中有时不能写一些其他页面的内容
+    -->
+    <script src="https://cdn.bootcss.com/require.js/2.3.5/require.js" defer async="true" data-main="js/index"></script>
+</head>
+<body>
+</body>
+</html>

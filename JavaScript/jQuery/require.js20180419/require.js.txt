@@ -1,0 +1,4 @@
+在jQuery中使用require.js AMD规范
+
+避免js过多产生的混乱,以及解决互相依赖问题
+
