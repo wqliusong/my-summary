@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://cdn.bootcss.com/jquery/1.10.0/jquery.min.js"></script>
+	<script type="text/javascript" src="1.js"></script>
+</head>
+<body>
+	<script type="text/javascript">
+		
+	</script>
+</body>
+</html>
+
+
+
+A014218032612352998975
+
+"http://127.0.0.1:80/ReleaseCallByCallID?A014218032612352998975"
+
+"http://127.0.0.1:80/ReleaseCallByCallID?A014218032612352998975&callback=?&module=zte"
+
+A014218032612390198998
+
+"http://127.0.0.1:80/OnRelease?A014218032612390198998"
+
+"http://127.0.0.1:80/OnRelease?A014218032612390198998&callback=?&module=zte"
+
+_jqjsp([{eventName:"210",args:"14202484|14202484|9309082|5|0|"}])
+
+http://127.0.0.1/ReleaseCallByCallID?9311055&callback=_jqjsp&module=zte&_1522042930507=
+http://127.0.0.1/GetEvent?sessionid={ad23fbf5-9189-454e-8845-5425f8e08590}&callback=_jqjsp&module=133957&_1522042931164=
+http://127.0.0.1/GetEvent?sessionid={5ccfbedc-9431-4941-a3d8-0285a2000290}&callback=_jqjsp&module=zte&_1522042931165=
+http://127.0.0.1/GetEvent?sessionid={ad23fbf5-9189-454e-8845-5425f8e08590}&callback=_jqjsp&module=133957&_1522042931194=
+
+http://127.0.0.1/ReleaseCallByCallID?9306253&callback=_jqjsp&module=zte&_1522044289568=
+
+"http://127.0.0.1:80/ReleaseCallByCallID?9307445"
+"http://127.0.0.1:80/ReleaseCallByCallID?9307445&callback=?&module=zte"
+
+http://127.0.0.1/ReleaseCallByCallID?9307730&callback=_jqjsp&module=zte&_1522045896994=
+
+9311055    9306253    9307445  9307730
+
+----------------------------------------------------
+http://127.0.0.1/GetAllPartsEx?dstAgtTel=99999954&callback=_jqjsp&module=zte&_1522046271749=
+http://127.0.0.1/GetAllPartsEx?dstAgtTel=99999954&callback=_jqjsp&module=zte&_1522068491390=
+<script>
+var invokerParam = "dstAgtTel=" + 99999954;
+webAgent.invoker("GetAllPartsEx", [invokerParam], function(callnoinfo) {
+    console.log(callnoinfo)
+    //alert(callnoinfo);
+    param = $.extend(param, {
+        callNoInfoType: 'GetAllPartsEx',
+        agentPhoneNo: agentPhoneNo,
+        callNoInfo: callnoinfo
+    });
+    responseCalllInEvent(param);
+});
+function getCallNo(fn) {
+    var agtPhoneNo = WebAgent.getAgtPhoneNo();
+    WebAgent.invoker("GetAllPartsEx", ["dstAgtTel=" + 99999954], function(callInfo) {
+        // callid|phoneNo|type;callid|phoneNo|type;
+        console.log(callInfo)
+        if (fn) 
+        	fn(callNo);
+    });
+}
+</script>
+"http://127.0.0.1:80/ReleaseCallByCallID?9308406&callback=?&module=zte"
+
+		
+ var agtPhoneNo = WebAgent.getAgtPhoneNo();
+			WebAgent.invoker("GetAllPartsEx", ["dstAgtTel=" + agtPhoneNo], function(callInfo) {
+				// callid|phoneNo|type;callid|phoneNo|type;
+				console.log(callInfo.replace(/(\|\w+)|(;)/,""))
+			});

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://cdn.bootcss.com/jquery/1.10.0/jquery.min.js"></script>
+</head>
+<body>
+	<input type="button" name="1233" value="123" disabled="disabled" id="btn" onclick="login()">
+</body>
+<script type="text/javascript">
+	$('#btn').attr("disabled",false); 
+	function login() {
+		console.log(this)
+	}
+</script>
+</html>

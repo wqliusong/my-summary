@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title></title>
+<script src="https://cdn.bootcss.com/jquery/1.10.0/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/blueimp-md5/2.9.0/js/md5.js"></script>
+<script type="text/javascript" src="webagent.js"></script>
+<!-- <script type="text/javascript" src="http://localhost:888/zteAgent/js/sipphone/util.js"></script> -->
+
+<script type="text/javascript">
+    function init()
+    {
+        createInput("oid", "oid", "10016")
+        createInput("pwd", "pwd", "Abc123")
+		createInput("bindphone", "bindphone", "14002201")
+		
+        createBtn("签入", function()
+        {
+            var WebAgent = top.window.WebAgent;
+            var sTimer = new Date().getTime();
+            WebAgent.signin(
+            {
+                oid : getVal("oid"),
+                pwd : new MD5().hex_md5(getVal("pwd")).toUpperCase(),
+                vcid : 1,
+                type : "10",
+				heartRate : 5,
+                cfgUrl : "http://172.25.5.149:8081/was",
+                lang : "zh_cn", 
+				phoneType:3,
+                RecordMode:2,
+				bindPhone:getVal("bindphone"),
+                onSucc : function()
+                {
+				   //示忙
+                   //示闲
+				   //WebAgent.idle();
+				   //注销 
+				   //WebAgent.logout();
+                   //外呼
+				    WebAgent.EteranlCall("946018853262585","21012345");
+                    WebAgent.invoke("SetIdle","");
+                   alert("登陆成功")
+                   onSucc();
+                },
+                onError : function(errCode, errMsg)
+                {
+                    alert("登录失败,原因【" + errMsg + "】");
+                }
+            });
+        })
+    }
+
+	//注册监听事件
+    function onSucc()
+    {
+
+        // 显示状态变化
+        WebAgent.regEvent("OnStateChanged", function(state)
+        {
+
+            alert("状态变化：" + state.name)
+            
+            if(state=="pre-call")
+            {
+                //预呼出
+            }
+
+        })
+		
+
+        // Com2.MsgHandle消息处理
+        
+        WebAgent.MsgHandle(function(msgType, data)
+        {
+
+            switch (msgType*1)
+            {
+				//呼入振铃
+				case 80 :
+					 alert("振铃");
+					//获取来电号码
+					 alert(WebAgent.GetCallingNO());
+					 //获取随路数据
+					 WebAgent.invoker("QueryCallData", [], function(callData)
+					 {
+						alert("随路数据" + callData);
+					 });
+					 
+					break;;
+
+				//外呼振铃振铃
+			    case 81:
+				    alert("外呼:" + WebAgent.GetCallingNO());
+					break;
+					
+				//呼入接通
+				case 11:
+					alert("呼入接通"+WebAgent.GetFlowNO());
+					break;
+					
+				//外呼接通
+				case 5  :
+					alert("外呼接通"+WebAgent.GetFlowNO());
+					break;
+					
+				//挂机
+				case 6  :
+					alert("挂机");
+					break;
+					
+				default :
+					break;
+            }
+            
+        });
+
+    }    
+    
+</script>
+
+</head>
+<body onload="init()">
+大数据话务Demo页面
+<hr />
+<div id="btnDiv">
+</div>
+
+</body>
+</html>
