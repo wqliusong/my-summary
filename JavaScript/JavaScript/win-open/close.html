@@ -7,12 +7,15 @@
     <title>Document</title>
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.10.0/jquery.min.js"> </script>
     <script src="./openModal.js"></script>
-    <script src="./gwDialog.js"></script>
+    <!-- <script src="./gwDialog.js"></script> -->
 </head>
 <body>
+    <button id="btn">123</button>
     <script>
-        gw_showModalDialog.gw_openWin("./close.html", 1024, 550)
-        //gwbnsh_dialog.popWin({ 'title': '属性-新增', 'url': "www.baidu.com" + type, 'width': 600, 'height': 450 })
+        $("#btn").click(function(){
+            console.log(1)
+            window.close();
+        })
     </script>
 </body>
 </html>
