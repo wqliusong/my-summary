@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.10.0/jquery.min.js"> </script>
+</head>
+
+<body>
+  <div id="box"></div>
+  <!-- h3#num1.num[style="background:pink;color:#ffc"]{3}+h4#num2.num[style="background:#ccc"]{4} -->
+  <h3 id="num1" class="num" style="background:pink;color:#ffc">3</h3>
+  <h4 id="num2" class="num" style="background:#ccc">4</h4>
+  <h5 id="num3" class="num"></h5>
+  <div id="box2"></div>
+  <div id="box3"></div>
+  <script>
+    var str = '数字之和:'
+    var num1 = 1;
+    var num2 = 2;
+    var num3 = 4;
+    var strCount;
+    strCount = str + (num1 + num2 + num3)
+    console.log(strCount)
+    $("#box").html(strCount)
+    $("#num3").html($("#num2").html() * 1 + $("#num1").html() * 1)
+    //字符串模板 ECMAscript ES6
+    var json = [
+      { 'h': '1', 'num': '11', 'id': 'num11', 'background': '#501', 'bool': true },
+      { 'h': '2', 'num': '12', 'id': 'num12', 'background': '#502', 'bool': false },
+      { 'h': '3', 'num': '13', 'id': 'num13', 'background': '#503', 'bool': true },
+      { 'h': '4', 'num': '14', 'id': 'num14', 'background': '#504', 'bool': false },
+      { 'h': '5', 'num': '15', 'id': 'num15', 'background': '#505', 'bool': true },
+      { 'h': '6', 'num': '16', 'id': 'num16', 'background': '#506', 'bool': false }
+    ];
+    var str1 = ''
+    var str2 = ''
+    json.forEach((ele, i) => {
+      // if(i == 3)
+      // console.log(ele, i)
+      str1 += '<h' + ele.h + ' id=' + ele.id + ' style="background:' + (ele.bool ? ele.background : "#fff") + '">' + ele.num + '</h' + ele.h + '>'
+      str2 += `<h${ele.h} id="${ele.id}"style="background:${ele.bool ? ele.background : "#fff"}">${ele.num}</h${ele.h}>`
+    });
+    console.log(str1)
+    console.log(str2)
+    $("#box2").html(str1)
+    $("#box3").html(str2)
+  </script>
+</body>
+
+</html>
