@@ -1,0 +1,71 @@
+const path = require('path')
+const UglifyPlugin = require('uglifyjs-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+// console.log('-----------------------------------', __dirname, __filename);
+module.exports = {
+	entry: {
+		index: './src/index.js',
+		about: './src/about.js'
+	},
+	output: {
+		path: path.resolve(__dirname, 'dist'),
+		filename: '[name].js',
+	},
+	module: {
+		rules: [
+			{
+				test: /\.jsx?/,
+				include: [
+					path.resolve(__dirname, 'src')
+				],
+				use: ['babel-loader'],
+				// 使用 babel-loader 只安装babel-loader是不行的，还要安装babel-core, 凡是use都要安装
+				// babel-loader@8 requires Babel 7.x (the package '@babel/core'). If you'd like to use Babel 6.x ('babel-core'), you should install 'babel-loader@7'.报错信息 要先卸载babel-core 安装 npm i @babel/core -D
+			},
+			{
+				test: /\.css/,
+				include: [
+					path.resolve(__dirname, 'src')
+				],
+				use: [
+					'style-loader',
+					'css-loader',// style-loader css-loader都是独立packager,需要npm安装
+					/* 
+						rules里面 use的引用顺序是反着的 , 如果先写'css'后'style'会报错
+						loader处理的顺序：
+							1. 先是css-loader处理（webpack把mian.css文件作为模块打包）
+							2. 接着是style-loade处理（让打包后的css可以写入html文件中的<style>） 
+					*/
+				]
+			}
+		]
+	},
+	// 代码模块路径解析的配置
+	resolve: {
+		modules: [
+			"node_modules",
+			path.resolve(__dirname, 'src')
+		],
+		extensions: ['.wasm', '.mjs', '.js', '.json', 'jsx'],
+	},
+	plugins: [
+		new UglifyPlugin(),
+		new HtmlWebpackPlugin({
+			filename: 'index.html', //配置输出文件名和路径
+			template: 'assets/index.html',
+			chunks: ['index'] //确定显示哪一个js
+		}),
+		new HtmlWebpackPlugin({ //多页面应用, 同样要配置多个entry, 
+			filename: 'about.html',
+			template: 'assets/about.html',
+			chunks: [] // 如果为空什么都不显示, 如果没有chunks 默认全部显示, [name]的名字 也就是 entry的key
+		})
+		//无参数默认生成一个html
+		// 使用uglifiyjs-webpack-plugin 压缩js代码
+		// -- mode production默认压缩js代码 属于mode参数
+	]
+}
+//会自动搜寻webpack.config.js
+
+//Entrypoint undefined = index.html 该项目GitHub的issue895也提到了这个问题，目前的反馈来看这就是无意义的提示，不影响编译结果。

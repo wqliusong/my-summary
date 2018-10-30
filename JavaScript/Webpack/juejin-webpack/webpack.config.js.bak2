@@ -1,0 +1,80 @@
+const path = require('path')
+const UglifyPlugin = require('uglifyjs-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+// 如果extract-text-webpack-plugin报错, npm i extract-text-webpack-plugin@next 安装bete版本
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+
+// console.log('-----------------------------------', __dirname, __filename);
+module.exports = {
+	entry: {
+		index: './src/index.js',
+		about: './src/about.js'
+	},
+	output: {
+		path: path.resolve(__dirname, 'dist'),
+		filename: '[name].js',
+	},
+	module: {
+		rules: [
+			{
+				test: /\.jsx?/, //jsx{0,1} 即支持js或者jsx
+				include: [
+					path.resolve(__dirname, 'src')// src目录下的才进行babel-laoder处理
+				],
+				use: [
+					'babel-loader' //安装babel@7 依赖 babel-core@6, babel@8依赖@babel/core 报错, 最后还要安装babel-preset-env/babel-preset-es2015, 添加.babelrc文件
+				],
+				//https://excaliburhan.com/post/babel-preset-and-plugins.html .babelc 配置
+			},
+			{
+				test: /\.(css|scss)$/,
+				// ExtractTextPlugin 需要干涉模块转换内容, 要调用他自己内部的style-loader
+				// 文件路径在创建实例的时候设置, 不需要include
+				use: ExtractTextPlugin.extract({
+					fallback: 'style-loader',
+					use: [
+						'css-loader',
+						'sass-loader'
+					],
+				})
+			},
+			{
+				test: /\.(png|jpg|gif|jpeg|svg)$/,
+				use: [
+					{
+						loader: 'file-loader',
+						options: {
+							name: '[name].[ext]',
+							outputPath: 'img/',
+							publicPath: '../img/'
+						}
+					}
+				]
+			}
+		]
+	},
+	// 代码模块路径解析的配置
+	resolve: {
+		modules: [
+			"node_modules",
+			path.resolve(__dirname, 'src')
+		],
+		extensions: ['.wasm', '.mjs', '.js', '.json', 'jsx'],
+	},
+	plugins: [
+		new UglifyPlugin(),
+		new HtmlWebpackPlugin({
+			filename: 'index.html', //配置输出文件名和路径
+			template: 'assets/index.html',
+			chunks: ['index'] //确定显示哪一个js
+		}),
+		new HtmlWebpackPlugin({ //多页面应用, 同样要配置多个entry, 
+			filename: 'about.html',
+			template: 'assets/about.html',
+			chunks: ['about'] // 如果为空什么都不会加载到当前html中,包括css(css依赖于js,有js才能把对应js的css写入到html中), 如果没有chunks 默认全部显示, [name]的名字 也就是 entry的key
+		}),
+		new ExtractTextPlugin('css/[name].css'), //提取出 或者 说 通过ExtractTextwebpackPlugin 转换出来的css 文件输出路径
+	]
+}
+
+//安装webpack-dev-server 启动webpack服务器 并配置package.json
