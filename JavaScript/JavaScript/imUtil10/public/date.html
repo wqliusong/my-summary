@@ -14,7 +14,7 @@
         //先转成英文日期 (MM-dd-yyyy, hh:mm:ss AM/PM) 关闭12小时显示, 清楚AM/PM, 把0补全, 然后替换'/' 为'-'
         const dateToFormat = (date) => {return date.toLocaleString("en-US", { hour12: false }).replace(/\b\d\b/g, '0$&').replace(new RegExp('/', 'gm'), '-')}
         //中文日期格式, 补全0, 替换'/' 为 '-', 去除数字, '-', ':', ;' '外所有文字
-        console.log(new Date().toLocaleString().replace(/\b\d\b/g, '0$&').replace(/\//g, '-').replace(/[^\d\-\: ]/g,""))
+        console.log(new Date().toLocaleString("zh-CN", { hour12: false }).replace(/\b\d\b/g, '0$&').replace(/\//g, '-').replace(/[^\d\-\: ]/g,""))
         console.log(dateToFormat(new Date()))
     </script>
 </body>

@@ -1,5 +1,13 @@
 {
+  "name": "im-util-10",
+  "version": "1.0.0",
   "devDependencies": {
     "webpack": "^4.8.1"
+  },
+  "author": "ls",
+  "scripts": {
+    "start": "webpack",
+    "test": "echo 'Erroe: no test sppecified' && exit 1",
+    "server": "webpack-dev-server --open"
   }
 }
