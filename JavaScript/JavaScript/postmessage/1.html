@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=	, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.10.0/jquery.min.js"> </script>
+</head>
+
+<body>
+	<div id="father">
+		<iframe id="if" src="./2.html"></iframe>
+		<button id="abc">abc</button>
+	</div>
+	<script>
+		window.addEventListener('message', function (e) {
+			console.log(e)
+		});
+		$("#abc").click(function (e) {
+			e.preventDefault();
+			document.getElementById("if").contentWindow.postMessage({ data: "father" }, '*')
+		});
+
+	</script>
+</body>
+
+</html>
